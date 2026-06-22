@@ -1,12 +1,27 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const FloatingActions = () => {
+const FloatingActions = ({ openQuoteModal }) => {
   return (
-    <div className="fixed right-6 bottom-12 z-50 flex flex-col space-y-4">
+    <div className="fixed right-6 bottom-12 z-[100] flex flex-col space-y-4">
+      {/* Enquire Us Button */}
+      <motion.button
+        onClick={openQuoteModal}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        className="w-14 h-14 rounded-full bg-gradient-to-r from-[var(--gold)] to-[#FAD961] flex items-center justify-center shadow-[0_0_20px_rgba(217,164,65,0.3)] border border-[#FAD961]/50 backdrop-blur-md relative group overflow-hidden"
+      >
+        <span className="absolute inset-0 w-full h-full bg-white/20 scale-0 group-hover:scale-100 transition-transform duration-300 rounded-full origin-center"></span>
+        <svg className="w-6 h-6 text-black relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+        </svg>
+      </motion.button>
+
       {/* WhatsApp Button */}
       <motion.a
-        href="#"
+        href="https://wa.me/919884003999"
+        target="_blank"
+        rel="noreferrer"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         className="w-14 h-14 rounded-full bg-[#25D366] flex items-center justify-center shadow-[0_0_20px_rgba(37,211,102,0.3)] border border-[#25D366]/50 backdrop-blur-md relative group overflow-hidden"

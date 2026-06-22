@@ -4,7 +4,12 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const HeroScrollytelling = () => {
+const HeroScrollytelling = ({ openQuoteModal }) => {
+  const scrollToSection = (id) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
   const containerRef = useRef(null);
   const pinnedRef = useRef(null);
   const canvasRef = useRef(null);
@@ -19,7 +24,7 @@ const HeroScrollytelling = () => {
   // Canvas configuration
   // IMPORTANT: Adjust totalFrames and imagePath based on your actual sequence
   const config = {
-    totalFrames: 152, 
+    totalFrames: 161, 
     imagePath: (index) => `/leokap-frame/ezgif-frame-${String(index + 1).padStart(3, '0')}.jpg`, // e.g. 0001.jpg
   };
 
@@ -134,7 +139,7 @@ const HeroScrollytelling = () => {
     tl.to(section4Ref.current, { opacity: 0, y: -50, duration: 10, ease: 'power2.inOut' }, 220);
 
     // SECTION 5: Frame 230-255 (Final CTA stays until the end)
-    tl.fromTo(section5Ref.current, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 10, ease: 'power2.out' }, 230);
+    // tl.fromTo(section5Ref.current, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 10, ease: 'power2.out' }, 230);
 
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -149,10 +154,10 @@ const HeroScrollytelling = () => {
       <div ref={pinnedRef} className="relative w-full h-screen overflow-hidden">
         
         {/* Canvas is absolute within the pinned container, NOT fixed globally */}
-        <canvas ref={canvasRef} className="absolute inset-0 z-10 w-full h-full object-cover"></canvas>
+        <canvas ref={canvasRef} className="absolute inset-0 z-10 w-full h-full object-cover pointer-events-none"></canvas>
           
         {/* Overlay to ensure text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80 z-10 pointer-events-none"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80 z-20 pointer-events-none"></div>
 
         {/* --- SCROLLING CONTENT OVERLAYS --- */}
         <div className="absolute inset-0 z-20 pointer-events-none flex items-center justify-center">
@@ -170,10 +175,16 @@ const HeroScrollytelling = () => {
               For architects, builders and construction professionals worldwide.
             </p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
-              <button className="px-8 py-4 bg-white text-black font-semibold rounded-full hover:scale-105 transition-transform">
+              <button 
+                onClick={() => scrollToSection('products')}
+                className="px-8 py-4 bg-white text-black font-semibold rounded-full hover:scale-105 transition-transform"
+              >
                 Explore Products
               </button>
-              <button className="px-8 py-4 bg-transparent border border-white text-white font-semibold rounded-full hover:bg-white/10 transition-colors">
+              <button 
+                onClick={openQuoteModal}
+                className="px-8 py-4 bg-transparent border border-white text-white font-semibold rounded-full hover:bg-white/10 transition-colors"
+              >
                 Contact Us
               </button>
             </div>
@@ -250,7 +261,7 @@ const HeroScrollytelling = () => {
           </div>
 
           {/* SECTION 5: 80% - 100% */}
-          <div ref={section5Ref} className="absolute inset-0 flex flex-col items-center justify-center text-center opacity-0 pointer-events-auto px-4">
+          {/* <div ref={section5Ref} className="absolute inset-0 flex flex-col items-center justify-center text-center opacity-0 pointer-events-auto px-4">
             <h2 className="text-5xl md:text-8xl font-bold tracking-tight mb-8">
               AESTHETIC.<br/>
               DURABLE.<br/>
@@ -260,14 +271,20 @@ const HeroScrollytelling = () => {
               Building Materials Reimagined.
             </p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
-              <button className="px-10 py-4 bg-[var(--blue)] hover:bg-[var(--cyan)] text-white font-bold rounded-full transition-colors tracking-wide shadow-[0_0_20px_rgba(0,80,255,0.4)]">
+              <button 
+                onClick={() => scrollToSection('products')}
+                className="px-10 py-4 bg-[var(--blue)] hover:bg-[var(--cyan)] text-white font-bold rounded-full transition-colors tracking-wide shadow-[0_0_20px_rgba(0,80,255,0.4)]"
+              >
                 Explore Products
               </button>
-              <button className="px-10 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white font-semibold rounded-full hover:bg-white/20 transition-colors">
+              <button 
+                onClick={openQuoteModal}
+                className="px-10 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white font-semibold rounded-full hover:bg-white/20 transition-colors"
+              >
                 Get Free Quote
               </button>
             </div>
-          </div>
+          </div> */}
 
         </div>
       </div>

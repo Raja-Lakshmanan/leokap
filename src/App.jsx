@@ -1,31 +1,29 @@
-import React from 'react';
-import Navbar from './components/Navbar';
-import FloatingActions from './components/FloatingActions';
-import HeroScrollytelling from './components/HeroScrollytelling';
-import AboutSection from './components/AboutSection';
-import WhatWeOffer from './components/WhatWeOffer';
-import ProductsGallery from './components/ProductsGallery';
-import ProjectsShowcase from './components/ProjectsShowcase';
-import ContactSection from './components/ContactSection';
-import Footer from './components/Footer';
+import React, { useState, useEffect } from 'react';
+import DesktopApp from './DesktopApp';
+import MobileApp from './MobileApp';
+import QuoteModal from './components/QuoteModal';
 
 function App() {
-  return (
-    <div className="bg-[var(--primary)] min-h-screen text-[var(--text-primary)] font-sans antialiased selection:bg-[var(--blue)] selection:text-white">
-      <Navbar />
-      <FloatingActions />
-      
-      <main>
-        <HeroScrollytelling />
-        <AboutSection />
-        <WhatWeOffer />
-        <ProductsGallery />
-        <ProjectsShowcase />
-        <ContactSection />
-      </main>
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
 
-      <Footer />
-    </div>
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const openQuoteModal = () => setIsQuoteModalOpen(true);
+  const closeQuoteModal = () => setIsQuoteModalOpen(false);
+
+  return (
+    <>
+      {isMobile ? <MobileApp openQuoteModal={openQuoteModal} /> : <DesktopApp openQuoteModal={openQuoteModal} />}
+      <QuoteModal isOpen={isQuoteModalOpen} onClose={closeQuoteModal} />
+    </>
   );
 }
 

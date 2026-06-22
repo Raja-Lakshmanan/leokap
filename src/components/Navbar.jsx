@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const Navbar = () => {
+const Navbar = ({ openQuoteModal }) => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -42,6 +42,15 @@ const Navbar = () => {
           <a
             key={item}
             href={`#${item.toLowerCase()}`}
+            onClick={(e) => {
+              e.preventDefault();
+              if (item === 'Home') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              } else {
+                const el = document.getElementById(item.toLowerCase());
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
             className="text-[var(--text-secondary)] text-sm font-medium hover:text-[var(--text-primary)] transition-colors duration-300 relative group"
           >
             {item}
@@ -53,6 +62,7 @@ const Navbar = () => {
       {/* Right: CTA */}
       <div className="hidden md:block">
         <motion.button
+          onClick={openQuoteModal}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className="relative px-6 py-2.5 rounded-full overflow-hidden group"
