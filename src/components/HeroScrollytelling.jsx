@@ -19,8 +19,8 @@ const HeroScrollytelling = () => {
   // Canvas configuration
   // IMPORTANT: Adjust totalFrames and imagePath based on your actual sequence
   const config = {
-    totalFrames: 255, 
-    imagePath: (index) => `/leokap-frames/ezgif-frame-${String(index + 1).padStart(3, '0')}.jpg`, // e.g. 0001.jpg
+    totalFrames: 152, 
+    imagePath: (index) => `/leokap-frame/ezgif-frame-${String(index + 1).padStart(3, '0')}.jpg`, // e.g. 0001.jpg
   };
 
   useEffect(() => {
@@ -96,7 +96,7 @@ const HeroScrollytelling = () => {
         trigger: container,
         start: 'top top',
         end: 'bottom bottom',
-        scrub: 5, // High scrub for super smooth cinematic lag
+        scrub: 10, // High scrub for super smooth cinematic lag
         pin: pinned,
       },
     });
