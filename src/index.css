@@ -1,0 +1,46 @@
+@import "tailwindcss";
+html{
+  scroll-behavior: smooth;
+}
+@theme {
+  --color-primary: #050505;
+  --color-secondary: #0A0A0C;
+  --color-construction-gold: #D9A441;
+  --color-premium-blue: #0050FF;
+  --color-accent-cyan: #00D6FF;
+  
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+:root {
+  --primary: #050505;
+  --secondary: #0A0A0C;
+  --gold: #D9A441;
+  --blue: #0050FF;
+  --cyan: #00D6FF;
+  --text-primary: rgba(255, 255, 255, 0.95);
+  --text-secondary: rgba(255, 255, 255, 0.65);
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--primary);
+  color: var(--text-primary);
+  font-family: "Inter", system-ui, sans-serif;
+  overscroll-behavior-y: none; /* Prevents scroll bounce on Mac to keep it cinematic */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hide scrollbar for cleaner look, but keep scrolling */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+/* Optional: selection color for premium feel */
+::selection {
+  background: var(--blue);
+  color: white;
+}
