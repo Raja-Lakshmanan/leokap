@@ -24,7 +24,7 @@ const HeroScrollytelling = ({ openQuoteModal }) => {
   // Canvas configuration
   // IMPORTANT: Adjust totalFrames and imagePath based on your actual sequence
   const config = {
-    totalFrames: 161, 
+    totalFrames: 56, 
     imagePath: (index) => `/leokap-frame/ezgif-frame-${String(index + 1).padStart(3, '0')}.jpg`, // e.g. 0001.jpg
   };
 
@@ -101,7 +101,7 @@ const HeroScrollytelling = ({ openQuoteModal }) => {
         trigger: container,
         start: 'top top',
         end: 'bottom bottom',
-        scrub: 10, // High scrub for super smooth cinematic lag
+        scrub: 5, // High scrub for super smooth cinematic lag
         pin: pinned,
       },
     });
@@ -123,20 +123,20 @@ const HeroScrollytelling = ({ openQuoteModal }) => {
     
     // SECTION 1: Frame 0-50
     // Fade in immediately, stay until frame 40, fade out by 50
-    tl.fromTo(section1Ref.current, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 5, ease: 'power2.out' }, 0);
-    tl.to(section1Ref.current, { opacity: 0, y: -50, duration: 10, ease: 'power2.inOut' }, 40);
+    tl.fromTo(section1Ref.current, { opacity: 1, y: 50 }, { opacity: 1, y: 0, duration: 5, ease: 'power2.out' }, 0);
+    tl.to(section1Ref.current, { opacity: 0, y: -50, duration: 10, ease: 'power2.inOut' }, 10);
 
     // SECTION 2: Frame 50-120
-    tl.fromTo(section2Ref.current, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 10, ease: 'power2.out' }, 50);
-    tl.to(section2Ref.current, { opacity: 0, y: -50, duration: 10, ease: 'power2.inOut' }, 110);
+    tl.fromTo(section2Ref.current, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 10, ease: 'power2.out' }, 15);
+    tl.to(section2Ref.current, { opacity: 0, y: -50, duration: 10, ease: 'power2.inOut' }, 24);
 
     // SECTION 3: Frame 120-180 (Annotations)
-    tl.fromTo(section3Ref.current, { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 10, ease: 'power2.out' }, 120);
-    tl.to(section3Ref.current, { opacity: 0, scale: 1.1, duration: 10, ease: 'power2.inOut' }, 170);
+    tl.fromTo(section3Ref.current, { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 10, ease: 'power2.out' }, 28);
+    tl.to(section3Ref.current, { opacity: 0, scale: 1.1, duration: 10, ease: 'power2.inOut' }, 38);
 
     // SECTION 4: Frame 180-230
-    tl.fromTo(section4Ref.current, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 10, ease: 'power2.out' }, 180);
-    tl.to(section4Ref.current, { opacity: 0, y: -50, duration: 10, ease: 'power2.inOut' }, 220);
+    tl.fromTo(section4Ref.current, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 10, ease: 'power2.out' }, 43);
+    tl.to(section4Ref.current, { opacity: 0, y: -50, duration: 10, ease: 'power2.inOut' }, 56);
 
     // SECTION 5: Frame 230-255 (Final CTA stays until the end)
     // tl.fromTo(section5Ref.current, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 10, ease: 'power2.out' }, 230);
@@ -223,7 +223,7 @@ const HeroScrollytelling = ({ openQuoteModal }) => {
               <div className="absolute top-[70%] left-[10%] md:left-[20%] flex items-center">
                 <div className="hidden md:block w-24 h-[1px] bg-white/30 mr-4"></div>
                 <div>
-                  <h4 className="text-[var(--gold)] font-bold text-sm tracking-widest mb-1">02</h4>
+                  <h4 className="text-[var(--gold)] font-bold text-sm tracking-widest mb-1">03</h4>
                   <p className="text-white text-lg font-medium tracking-wide">EXTENDED DURABILITY</p>
                 </div>
               </div>
@@ -232,7 +232,7 @@ const HeroScrollytelling = ({ openQuoteModal }) => {
               <div className="absolute top-[30%] right-[10%] md:right-[20%] flex items-center flex-row-reverse">
                 <div className="hidden md:block w-40 h-[1px] bg-white/30 ml-4"></div>
                 <div className="text-right">
-                  <h4 className="text-[var(--gold)] font-bold text-sm tracking-widest mb-1">03</h4>
+                  <h4 className="text-[var(--gold)] font-bold text-sm tracking-widest mb-1">02</h4>
                   <p className="text-white text-lg font-medium tracking-wide">SUPERIOR BOND STRENGTH</p>
                 </div>
               </div>
@@ -259,32 +259,6 @@ const HeroScrollytelling = ({ openQuoteModal }) => {
               <span>Industrial.</span>
             </div>
           </div>
-
-          {/* SECTION 5: 80% - 100% */}
-          {/* <div ref={section5Ref} className="absolute inset-0 flex flex-col items-center justify-center text-center opacity-0 pointer-events-auto px-4">
-            <h2 className="text-5xl md:text-8xl font-bold tracking-tight mb-8">
-              AESTHETIC.<br/>
-              DURABLE.<br/>
-              TRUSTED.
-            </h2>
-            <p className="text-xl md:text-2xl text-[var(--gold)] font-medium tracking-widest mb-12 uppercase">
-              Building Materials Reimagined.
-            </p>
-            <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
-              <button 
-                onClick={() => scrollToSection('products')}
-                className="px-10 py-4 bg-[var(--blue)] hover:bg-[var(--cyan)] text-white font-bold rounded-full transition-colors tracking-wide shadow-[0_0_20px_rgba(0,80,255,0.4)]"
-              >
-                Explore Products
-              </button>
-              <button 
-                onClick={openQuoteModal}
-                className="px-10 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white font-semibold rounded-full hover:bg-white/20 transition-colors"
-              >
-                Get Free Quote
-              </button>
-            </div>
-          </div> */}
 
         </div>
       </div>

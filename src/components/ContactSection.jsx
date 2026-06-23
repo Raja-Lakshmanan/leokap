@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import catalog from "/public/catalog.pdf"
 const ContactSection = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -25,7 +24,7 @@ const ContactSection = () => {
             viewport={{ once: true }}
             className="flex flex-col sm:flex-row justify-center items-center gap-6"
           >
-             <a href={catalog} download="catalog.pdf">
+             <a href="/catalog.pdf" target="_blank" rel="noopener noreferrer">
             <button className="w-full sm:w-auto px-10 py-5 bg-transparent border border-[var(--gold)] text-[var(--gold)] font-bold tracking-wide rounded hover:bg-[var(--gold)] hover:text-black transition-colors duration-300">
             Download Our Catalog
             </button>

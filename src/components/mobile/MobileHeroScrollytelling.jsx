@@ -4,12 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const MobileHeroScrollytelling = ({ openQuoteModal }) => {
-  const scrollToSection = (id) => {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  };
-
+const MobileHeroScrollytelling = () => {
   const containerRef = useRef(null);
   const pinnedRef = useRef(null);
   const canvasRef = useRef(null);
@@ -17,15 +12,14 @@ const MobileHeroScrollytelling = ({ openQuoteModal }) => {
   // Section Refs
   const section1Ref = useRef(null);
   const section2Ref = useRef(null);
-  const section3Ref = useRef(null);
   const section4Ref = useRef(null);
   const section5Ref = useRef(null);
 
   // Mobile Configuration
   const config = {
-    totalFrames: 76, 
+    totalFrames: 49, 
     // Use every second frame (1, 3, 5...)
-    imagePath: (index) => `/leokap-frames/ezgif-frame-${String((index * 2) + 1).padStart(3, '0')}.jpg`, 
+    imagePath: (index) => `/leokap-frames/ezgif-frame-${String(index  + 1).padStart(3, '0')}.jpg`, 
   };
 
   useEffect(() => {
@@ -49,8 +43,8 @@ const MobileHeroScrollytelling = ({ openQuoteModal }) => {
       if (images[index]) {
         const img = images[index];
         
-        // Cinematic Mobile layout: 85% width, centered vertically and horizontally
-        const scale = (window.innerWidth * 0.85) / img.width;
+        // Cinematic Mobile layout: 90% width, centered vertically and horizontally
+        const scale = (window.innerWidth * 1) / img.width;
         
         const drawWidth = img.width * scale;
         const drawHeight = img.height * scale;
@@ -91,7 +85,7 @@ const MobileHeroScrollytelling = ({ openQuoteModal }) => {
         trigger: container,
         start: 'top top',
         end: 'bottom bottom',
-        scrub: 3, // Mobile optimized scrub (faster feel)
+        scrub: 2, 
         pin: pinned,
       },
     });
@@ -105,25 +99,21 @@ const MobileHeroScrollytelling = ({ openQuoteModal }) => {
       onUpdate: () => render(Math.round(frameObj.frame)),
     }, 0);
 
-    // Timeline calculations based on totalDuration (75)
-    // Section 1: 0% - 20% (Frames 0 - 15)
-    tl.fromTo(section1Ref.current, { opacity: 0 }, { opacity: 1, duration: 3, ease: 'power2.out' }, 0);
-    tl.to(section1Ref.current, { opacity: 0, duration: 3, ease: 'power2.inOut' }, 12);
+    // 4 Minimal Narrative Beats for 600vh (totalDuration = 75)
+    // 1. Hero (0-15)
+    tl.fromTo(section1Ref.current, { opacity: 1 }, { opacity: 1, duration: 4, ease: 'power2.out' }, 0);
+    tl.to(section1Ref.current, { opacity: 0, duration: 4, ease: 'power2.inOut' }, 11);
 
-    // Section 2: 20% - 40% (Frames 15 - 30)
-    tl.fromTo(section2Ref.current, { opacity: 0 }, { opacity: 1, duration: 4, ease: 'power2.out' }, 15);
-    tl.to(section2Ref.current, { opacity: 0, duration: 4, ease: 'power2.inOut' }, 26);
+    // 2. Engineering (16-35)
+    tl.fromTo(section2Ref.current, { opacity: 0 }, { opacity: 1, duration: 5, ease: 'power2.out' }, 16);
+    tl.to(section2Ref.current, { opacity: 0, duration: 5, ease: 'power2.inOut' }, 30);
 
-    // Section 3: 40% - 60% (Frames 30 - 45)
-    tl.fromTo(section3Ref.current, { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 4, ease: 'power2.out' }, 30);
-    tl.to(section3Ref.current, { opacity: 0, scale: 1.05, duration: 4, ease: 'power2.inOut' }, 41);
+    // 3. Built To Last (36-55)
+    tl.fromTo(section4Ref.current, { opacity: 0 }, { opacity: 1, duration: 5, ease: 'power2.out' }, 36);
+    tl.to(section4Ref.current, { opacity: 0, duration: 5, ease: 'power2.inOut' }, 50);
 
-    // Section 4: 60% - 80% (Frames 45 - 60)
-    tl.fromTo(section4Ref.current, { opacity: 0 }, { opacity: 1, duration: 4, ease: 'power2.out' }, 45);
-    tl.to(section4Ref.current, { opacity: 0, duration: 4, ease: 'power2.inOut' }, 56);
-
-    // Section 5: 80% - 100% (Frames 60 - 75)
-    tl.fromTo(section5Ref.current, { opacity: 0 }, { opacity: 1, duration: 4, ease: 'power2.out' }, 60);
+    // 4. Final CTA (56-75)
+    tl.fromTo(section5Ref.current, { opacity: 0 }, { opacity: 1, duration: 5, ease: 'power2.out' }, 56);
 
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -131,51 +121,39 @@ const MobileHeroScrollytelling = ({ openQuoteModal }) => {
     };
   }, []);
 
-  // Typography utilities for consistent scaling
-  const heroHeading = "text-[clamp(28px,7vw,40px)] font-bold tracking-tight leading-[1.1]";
-  const sectionHeading = "text-[clamp(24px,6vw,32px)] font-bold tracking-tight leading-[1.1]";
-  const bodyText = "text-[clamp(14px,4vw,16px)] text-[var(--text-secondary)] font-light leading-snug";
-  const buttonClass = "w-full py-4 text-[16px] font-semibold rounded-full flex items-center justify-center transition-transform active:scale-95";
+  // Strict typography scaling per user request
+  const heroHeading = "text-[36px] font-bold tracking-tight leading-[1.1]";
+  const sectionHeading = "text-[28px] font-bold tracking-tight leading-[1.1]";
+  const bodyText = "text-[15px] text-[var(--text-secondary)] font-light leading-snug";
 
   return (
-    <section ref={containerRef} id="home" className="relative w-full bg-[var(--primary)] h-[700vh]">
+    <section ref={containerRef} id="home" className="relative w-full bg-[#0a0a0c] h-[600vh]">
       
-      <div ref={pinnedRef} className="relative w-full h-screen overflow-hidden bg-[var(--primary)]">
+      <div ref={pinnedRef} className="relative w-full h-screen overflow-hidden bg-[#0a0a0c]">
         
         {/* Sequence Canvas */}
         <canvas ref={canvasRef} style={{width: '100%', height: '100%'}} className="absolute inset-0 z-10 block pointer-events-none"></canvas>
           
         {/* Text Overlay Gradient for legibility at bottom */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[var(--primary)] via-transparent to-[var(--primary)] opacity-80 z-20 pointer-events-none"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0c] via-transparent to-[#0a0a0c] opacity-60 z-20 pointer-events-none"></div>
 
         {/* Content Container */}
         <div className="absolute inset-0 z-30 pointer-events-none flex flex-col items-center justify-center px-6 pb-24 pt-safe pb-safe">
           
-          {/* SECTION 1 */}
+          {/* SECTION 1: HERO */}
           <div ref={section1Ref} className="absolute inset-0 flex flex-col items-center justify-center text-center opacity-0 pointer-events-auto w-full px-4">
+            <span className="text-[10px] tracking-widest text-[var(--gold)] uppercase font-semibold mb-4 bg-[var(--gold)]/10 px-3 py-1 rounded-full">
+              Trusted by Professionals
+            </span>
             <h1 className={`${heroHeading} mb-3`}>
               LEOKAP ADHESIVE
             </h1>
-            <h2 className={`${bodyText} mb-6`}>
+            <h2 className={`${bodyText} max-w-[280px]`}>
               Make It Aesthetic.<br />Make It Long-Lasting.
             </h2>
-            <div className="flex flex-col space-y-3 w-full max-w-[280px]">
-              <button 
-                onClick={() => scrollToSection('products')}
-                className={`${buttonClass} bg-white text-black`}
-              >
-                Explore Products
-              </button>
-              <button 
-                onClick={openQuoteModal}
-                className={`${buttonClass} bg-white/5 border border-white/20 text-white backdrop-blur-sm`}
-              >
-                Contact Us
-              </button>
-            </div>
           </div>
 
-          {/* SECTION 2 */}
+          {/* SECTION 2: ENGINEERING */}
           <div ref={section2Ref} className="absolute inset-0 flex flex-col items-center justify-center text-center opacity-0 w-full px-4">
             <h2 className={`${sectionHeading} mb-3`}>
               ENGINEERED FOR<br />
@@ -184,31 +162,11 @@ const MobileHeroScrollytelling = ({ openQuoteModal }) => {
               </span>
             </h2>
             <p className={`${bodyText} max-w-[280px]`}>
-              Advanced polymer technology.<br />
-              Superior adhesion.<br />
-              Professional-grade performance.
+              Advanced polymer technology engineered for superior adhesion and long-lasting performance.
             </p>
           </div>
 
-          {/* SECTION 3 - Feature Chips */}
-          <div ref={section3Ref} className="absolute inset-0 flex flex-col items-center justify-center opacity-0 w-full px-4">
-            <div className="flex flex-col w-full max-w-[280px] space-y-2.5">
-              {[
-                { n: "01", t: "Polymer Enhanced" },
-                { n: "02", t: "Superior Bond Strength" },
-                { n: "03", t: "Crack Resistant" },
-                { n: "04", t: "Extended Durability" },
-                { n: "05", t: "Professional Grade" }
-              ].map((feature, idx) => (
-                <div key={idx} className="flex items-center px-5 py-3 bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.08)] rounded-xl backdrop-blur-md">
-                  <span className="text-[var(--gold)] text-xs font-bold tracking-widest mr-4">{feature.n}</span>
-                  <span className="text-white text-sm font-medium tracking-wide">{feature.t}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* SECTION 4 */}
+          {/* SECTION 3: BUILT TO LAST */}
           <div ref={section4Ref} className="absolute inset-0 flex flex-col items-center justify-center text-center opacity-0 w-full px-4">
             <h2 className={`${heroHeading} mb-8`}>
               BUILT TO LAST.
@@ -228,27 +186,13 @@ const MobileHeroScrollytelling = ({ openQuoteModal }) => {
             </div>
           </div>
 
-          {/* SECTION 5 */}
+          {/* SECTION 4: FINAL CTA */}
           <div ref={section5Ref} className="absolute inset-0 flex flex-col items-center justify-center text-center opacity-0 pointer-events-auto w-full px-4">
-            <h2 className={`${heroHeading} mb-5 tracking-widest`}>
+            <h2 className={`${heroHeading} mb-3 tracking-widest`}>
               AESTHETIC.<br/>
               DURABLE.<br/>
               TRUSTED.
             </h2>
-            <div className="flex flex-col space-y-3 w-full max-w-[280px]">
-              <button 
-                onClick={openQuoteModal}
-                className={`${buttonClass} bg-gradient-to-r from-[var(--blue)] to-[var(--cyan)] text-white shadow-[0_0_20px_rgba(0,80,255,0.3)]`}
-              >
-                Get Free Quote
-              </button>
-              <button 
-                onClick={() => scrollToSection('products')}
-                className={`${buttonClass} bg-transparent text-white border-b border-white/20 rounded-none w-auto mx-auto px-4 py-2 hover:border-white transition-colors`}
-              >
-                Explore Products
-              </button>
-            </div>
           </div>
 
         </div>
